@@ -1,0 +1,11 @@
+/deploy/
+/.env.local.php
+/.env.*.local
+/.env
+/.env.prod
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+/.idea/
+.phpunit.result.cache

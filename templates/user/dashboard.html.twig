@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% set title='Dashboard'|trans %}
+{% set description='Dashboard'|trans %}
+
+{% block body %}
+    <header class="py-3">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <h1 class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark-none fs-5">
+                {{ title }}
+            </h1>
+        </div>
+    </header>
+    <div class="container">
+        <div class="p-3 bg-body rounded shadow-sm">
+            <div class="d-flex pt-3">
+                <div class="mb-0 small lh-sm w-100">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Domain</th>
+                            <th scope="col">Valid</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for domain in domains %}
+                            <tr>
+                                <th scope="row">{{ domain.id }}</th>
+                                <td>{{ domain.domain }}</td>
+                                <td>{{ domain.valid ? 'Y' : 'N' }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}"/>
+    {% if app.request.get('_route') %}
+        <link rel="canonical" href="{{ url(app.request.get('_route'), app.request.get('_route_params', {})|merge({'_locale': null})) }}"/>
+        <link rel="alternate" hreflang="{{ app.request.locale }}" href="{{ url(app.request.get('_route'), app.request.get('_route_params', {})) }}"/>
+        <meta name="twitter:title" content="{{ title }}">
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:description" content="{{ description }}"/>
+        <meta property="og:title" content="{{ title }}">
+        <meta property="og:locale" content="{{ app.request.locale }}">
+        <meta property="og:image" content="{{ asset('logo.svg') }}">
+        <meta property="og:description" content="{{ description }}">
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/copy.js') }}" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('bootstrap-icons-1.7.2/bootstrap-icons.css') }}" integrity="sha384-EvBWSlnoFgZlXJvpzS+MAUEjvN7+gcCwH+qh7GRFOGgZO0PuwOFro7qPOJnLfe7l" crossorigin="anonymous">
+</head>
+<body class="bg-light">
+    <nav class="py-2 bg-white">
+        <div class="container d-flex flex-wrap">
+            <a href="{{ path('route_index') }}" class="d-flex align-items-center">
+                <img src="{{ asset('logo.svg') }}" width="32" height="32" alt="{{ 'meta-title' }}"/>
+            </a>
+            <ul class="nav me-auto">
+                <li class="nav-item">
+                    <a href="{{ path('route_index') }}" class="nav-link px-2 link-secondary" aria-current="page">Millau</a>
+                </li>
+            </ul>
+            <ul class="nav">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item">
+                        <a href="{{ path('route_user_logout') }}" class="nav-link link-dark px-2" aria-current="page">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{{ path('route_user_login') }}" class="nav-link link-dark px-2" aria-current="page">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    {% for message in app.flashes('success') %}
+        <div class="container">
+            <div class="alert alert-success my-3" role="alert">{{ message }}</div>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="container">
+            <div class="alert alert-danger my-3" role="alert">{{ message }}</div>
+        </div>
+    {% endfor %}
+
+    {% block body %}{% endblock %}
+
+    <nav class="py-3">
+        <div class="container d-flex flex-wrap pt-3">
+            <small>
+                &copy; {{ 'now'|date('Y') }} &middot;
+                <a class="text-dark text-decoration-none" href="mailto:&#105;&#110;&#102;&#111;&#064;&#109;&#105;&#108;&#108;&#097;&#117;&#046;&#111;&#118;&#104;">Contact</a>
+            </small>
+        </div>
+    </nav>
+{% block footer %}
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org/",
+            "@type": "WebSite",
+            "name": "{{ title }}",
+            "description": "{{ description }}",
+            "datePublished": "2022-04-07"
+        }
+    </script>
+{% endblock %}
+</body>
+</html>

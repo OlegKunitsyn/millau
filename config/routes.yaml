@@ -1,0 +1,21 @@
+route_index:
+  path: /
+  controller: App\Controller\DefaultController::index
+  methods: [GET, POST]
+route_inbox:
+  path: /inbox
+  controller: App\Controller\DefaultController::inbox
+  methods: [POST]
+route_outbox:
+  path: /outbox
+  controller: App\Controller\DefaultController::outbox
+  methods: [POST]
+route_user_dashboard:
+  path: /user
+  controller: App\Controller\UserController::dashboard
+route_user_login:
+  path: /login
+  controller: App\Controller\UserController::login
+route_user_logout:
+  path: /user/logout
+  controller: App\Controller\UserController::logout

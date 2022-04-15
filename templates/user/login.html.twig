@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% set title='Login'|trans %}
+{% set description='Login'|trans %}
+
+{% block body %}
+    <header class="py-3">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <h1 class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark-none fs-5">
+                {{ title }}
+            </h1>
+        </div>
+    </header>
+    <div class="container">
+        <div class="p-3 bg-body rounded shadow-sm">
+            <div class="d-flex pt-3">
+                <div class="mb-0 small lh-sm w-100">
+                    {{ form(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

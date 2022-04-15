@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% set title='Error' %}
+{% set description=status_text %}
+
+{% block body %}
+<header class="py-3">
+    <div class="container d-flex flex-wrap justify-content-center">
+        <h1 class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark-none fs-5">
+            {{ title }}
+        </h1>
+    </div>
+</header>
+
+<div class="container">
+    <div class="p-3 bg-body rounded shadow-sm">
+        <div class="d-flex pt-3">
+            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                <div class="d-flex w-100 justify-content-center">
+                    <h1 class="card-title">
+                        {{ status_code }}
+                    </h1>
+                </div>
+                <div class="card-body d-flex justify-content-center">
+                    <p>Oops! {% if status_code == 404 %}This page does not exist{% else %}{{ status_text }}{% endif %}.</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="small navbar navbar-light d-block text-end py-3">
+            <div class="d-flex w-100 justify-content-end">
+                <ul class="pagination">
+                    <li class="page-item active">
+                        <a class="nav-link text-success" href="{{ path('route_index') }}">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+{% endblock %}

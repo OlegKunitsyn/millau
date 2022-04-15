@@ -1,0 +1,38 @@
+{% use 'bootstrap_5_layout.html.twig' %}
+
+{%- block submit_widget -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' btn-dark btn-sm')|trim}) -%}
+    {{- parent() -}}
+{%- endblock submit_widget %}
+
+{%- block button_widget -%}
+    {%- set attr = attr|merge({class: (attr.class|default('btn-outline-dark btn-sm') ~ ' btn')|trim}) -%}
+    {{- parent() -}}
+{%- endblock button_widget %}
+
+{% block textarea_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control-sm')|trim}) %}
+    {{- parent() -}}
+{%- endblock textarea_widget %}
+
+{%- block choice_widget_collapsed -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-select-sm')|trim}) -%}
+    {{- parent() -}}
+{%- endblock choice_widget_collapsed -%}
+
+{% block form_widget_simple -%}
+    {%- if type is not defined or type != 'hidden' %}
+        {%- set widget_class = ' form-control-sm' %}
+        {%- if type|default('') == 'color' -%}
+            {%- set widget_class = widget_class ~ ' form-control-color' -%}
+        {%- elseif type|default('') == 'range' -%}
+            {%- set widget_class = ' form-range' -%}
+        {%- endif -%}
+        {%- set attr = attr|merge({class: (attr.class|default('') ~ widget_class)|trim}) -%}
+    {% endif -%}
+    {%- if type is defined and type in ['range', 'color'] %}
+        {# Attribute "required" is not supported #}
+        {% set required = false %}
+    {% endif -%}
+    {{- parent() -}}
+{%- endblock form_widget_simple %}

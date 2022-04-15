@@ -1,0 +1,27 @@
+parameters:
+  sendgrid_api_key: '%env(SENDGRID_API_KEY)%'
+  telegram_token: '%env(TELEGRAM_TOKEN)%'
+  telegram_group: '%env(TELEGRAM_GROUP)%'
+  domain: millau.ovh
+
+services:
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    public: true
+
+  App\:
+    resource: '../src/'
+    exclude:
+      - '../src/DependencyInjection/'
+      - '../src/Entity/'
+      - '../src/Kernel.php'
+
+  App\Service\SendGridService:
+    arguments: [ '%sendgrid_api_key%', '%domain%' ]
+
+  App\Service\TelegramService:
+    arguments: [ '%telegram_token%', '%telegram_group%', '%domain%' ]
+
+  App\Service\CryptService:
+    arguments: [ '%kernel.secret%' ]
