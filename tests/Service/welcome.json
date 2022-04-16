@@ -1,0 +1,13 @@
+{
+  "headers": "Received: by mx0122p1mdw1.sendgrid.net with SMTP id 1h1v0ny7sV Sat, 09 Apr 2022 12:35:05 +0000 (UTC)\nReceived: from forward401j.mail.yandex.net (unknown [5.45.198.233]) by mx0122p1mdw1.sendgrid.net (Postfix) with ESMTPS id 00732180C67 for <info@millau.ovh>; Sat,  9 Apr 2022 12:35:04 +0000 (UTC)\nReceived: from myt6-d550f0f924f5.qloud-c.yandex.net (myt6-d550f0f924f5.qloud-c.yandex.net [IPv6:2a02:6b8:c12:2229:0:640:d550:f0f9]) by forward401j.mail.yandex.net (Yandex) with ESMTP id 98C071ACE2C8 for <info@millau.ovh>; Sat,  9 Apr 2022 15:35:03 +0300 (MSK)\nReceived: from 2a02:6b8:c12:599f:0:640:4a3f:7874 (2a02:6b8:c12:599f:0:640:4a3f:7874 [2a02:6b8:c12:599f:0:640:4a3f:7874]) by myt6-d550f0f924f5.qloud-c.yandex.net (mxback\/Yandex) with HTTP id 2ZN6Nh2faa61-Z3fm5oBW; Sat, 09 Apr 2022 15:35:03 +0300\nX-Yandex-Fwd: 1\nDKIM-Signature: v=1; a=rsa-sha256; c=relaxed\/relaxed; d=example.com; s=mail; t=1649507703; bh=sBrODGMZ36rSyCeK0mdUm7Rb\/9RTRuJdapRgVAEYvn4=; h=Message-Id:Date:Subject:To:From; b=c3cDobhRvceppJSh1XXxySV1geM3c7EhZczVX7nUWx7ji\/37Z5kIvcWH+XA2Ls2gY 2pvG5yt2AkgyzvedaO9y2jhjAgbHw8tc5y5lFiV7vpgX70NsQpInkkFcqiG1aJGhm\/ 8LyeGd89sGHMZ5GN1JW3NCifSOQlTi5vsUCUT12k=\nAuthentication-Results: myt6-d550f0f924f5.qloud-c.yandex.net; dkim=pass header.i=@example.com\nReceived: by myt5-4a3f787458e4.qloud-c.yandex.net with HTTP; Sat, 09 Apr 2022 15:35:03 +0300\nFrom: Info <info@example.com>\nTo: \"info@millau.ovh\" <info@millau.ovh>\nSubject: Test\nMIME-Version: 1.0\nX-Mailer: Yamail [ http:\/\/yandex.ru ] 5.0\nDate: Sat, 09 Apr 2022 14:35:03 +0200\nMessage-Id: <493831649507689@mail.yandex.com>\nContent-Type: text\/html; charset=utf-8\nContent-Transfer-Encoding: quoted-printable\n",
+  "dkim": "{@example.com : fail (body has been altered)}",
+  "to": "\"info@millau.ovh\" <info@millau.ovh>",
+  "html": "<div><div>Hello!<\/div><div>\u00a0<\/div><div>Would you like to have an email address that contains your business name i.e. info@yourdomain.com?<\/div><div>I created an Email-to-Telegram bridge for that - https:\/\/millau.ovh<\/div><div>\u00a0<\/div><div>In short,<\/div><div>- You can interconnect your domains with Telegram groups.<\/div><div>- You can use multiple email addresses per domain.<\/div><div>- You can reply to the email inside the Telegram group.<\/div><div>Free of charge, why not.<\/div><div>\u00a0<\/div><div>Sincerely yours<\/div><\/div>\n",
+  "from": "Info <info@example.com>",
+  "sender_ip": "5.45.198.233",
+  "envelope": "{\"to\":[\"info@millau.ovh\"],\"from\":\"info@example.com\"}",
+  "attachments": "0",
+  "subject": "Test",
+  "charsets": "{\"to\":\"UTF-8\",\"html\":\"utf-8\",\"subject\":\"UTF-8\",\"from\":\"UTF-8\"}",
+  "SPF": "pass"
+}

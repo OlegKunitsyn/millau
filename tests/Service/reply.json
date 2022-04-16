@@ -1,0 +1,73 @@
+{
+  "update_id": 150000000,
+  "message": {
+    "message_id": 28000,
+    "from": {
+      "id": 1800000000,
+      "is_bot": false,
+      "first_name": "Firstname"
+    },
+    "chat": {
+      "id": -1000000000000,
+      "title": "dev",
+      "type": "supergroup"
+    },
+    "date": 1600000000,
+    "reply_to_message": {
+      "message_id": 20000,
+      "from": {
+        "id": 5100000000,
+        "is_bot": true,
+        "first_name": "millau",
+        "username": "millaubot"
+      },
+      "chat": {
+        "id": -1000000000000,
+        "title": "dev",
+        "type": "supergroup"
+      },
+      "date": 1600000000,
+      "text": "From:  Firstname Lastname firstname.lastname@gmail.com\nTo:  info@millau.ovh\nTest subject\nTest message",
+      "entities": [
+        {
+          "offset": 0,
+          "length": 5,
+          "type": "bold"
+        },
+        {
+          "offset": 26,
+          "length": 28,
+          "type": "email"
+        },
+        {
+          "offset": 23,
+          "length": 3,
+          "type": "bold"
+        },
+        {
+          "offset": 61,
+          "length": 15,
+          "type": "email"
+        },
+        {
+          "offset": 44,
+          "length": 12,
+          "type": "bold"
+        }
+      ]
+    },
+    "text": "Hello!\nThis is my reply.\n:)",
+    "entities": [
+      {
+        "offset": 0,
+        "length": 7,
+        "type": "bold"
+      },
+      {
+        "offset": 7,
+        "length": 18,
+        "type": "italic"
+      }
+    ]
+  }
+}

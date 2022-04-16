@@ -1,0 +1,15 @@
+{
+  "headers": "Received: by mx0106p1las1.sendgrid.net with SMTP id 1cPCSG7l4c Sun, 03 Apr 2022 07:46:05 +0000 (UTC)\nReceived: from mail-ed1-f52.google.com (unknown [209.85.208.52]) by mx0106p1las1.sendgrid.net (Postfix) with ESMTPS id 1A25F80CEF; Sun,  3 Apr 2022 07:46:05 +0000 (UTC)\nReceived: by mail-ed1-f52.google.com with SMTP id g22so7597633edz.2; Sun, 03 Apr 2022 00:46:05 -0700 (PDT)\nDKIM-Signature: v=1; a=rsa-sha256; c=relaxed\/relaxed; d=gmail.com; s=20210112; h=mime-version:from:date:message-id:subject:to:cc; bh=natD533+WndyqP9i7iDUaro0egwCxS7YR+tmQ8e7lKU=; b=oUnAa52WDdpPKopZHIzfGOBo\/ImZ6s\/vcTXmNbCkYqDlPSjMjoK1\/+qUaiyiHCcGBo PJQ52vt37bfSgcMf7oxqBvcXmOexIPXWtcWt2wVmevTraJdqB3j\/PVIIGmzNl+TyhsaV GhCO6Td9WiXzfiaWB3R0yHhuqKTbyBphQ8PxOhs08PcDFtm3ABuqjM26djyzE5t1NnJQ pfyFQv29V1DCyH0L2M8zafRl1Fi3IFhy1jOTmUD0tnF3eBRaBNwGMzQB67Z\/eggXm1lD 2Cx\/2a+DLy4w6ofqaPyFfB2w6uD11xaBL7g12gUZE0+5JXPhp9RE1pV\/kcEud1zCPlXg RcLQ==\nX-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed\/relaxed; d=1e100.net; s=20210112; h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc; bh=natD533+WndyqP9i7iDUaro0egwCxS7YR+tmQ8e7lKU=; b=qhjPCe1BiVfTe46+gJTeZtIR5Xmwq6zxvdS8VM+A0zVMEAI6pFi+YlFitdbcxgXEVW Jr7T3QkT65G5KoEF4HoKH1uIy2FsSsBPewSKfT6ujMc0sNZSLhPMTnEaVVLBw9OUR1A2 rTnQfNdctghcJHtyNXcRl9lgUJN3LtEV2jeWN7asxlwr4P1C11sXHjjJdI\/qtAYtyUpK QjABKBW2ggZl7gQXNo\/DRTCRHADZsjusBjn4Nx+DHV8uAKuD0IbPZ9YxSGLo8Jg1QSCC xo1YCBsQWZM2CMyRpSsyy5Bj7Qiqoy+AH9JPhpeIqufQsbJyPdUeja1qiIImmg4rFOwN GiEQ==\nX-Gm-Message-State: AOAM533prpMV6ABvhP\/BGDmzDzJIsfC54X63gc6vvrEvCoD4DYvwQJVM 5c0tryEDp2n1147gF+gjx3gGuuh1aXq5k7QJGLTOo8qTJfY=\nX-Google-Smtp-Source: ABdhPJz05\/Jl1ly3UJLNSxWgvlxA4NxNYhBv2Y4dJMhzvynmS0beQ2gVInX83VZzxxxeXBvU8Pk1TqgsT7OwmsOJaL8=\nX-Received: by 2002:a05:6402:42d4:b0:416:5cac:a9a0 with SMTP id i20-20020a05640242d400b004165caca9a0mr28356724edc.86.1648971963503; Sun, 03 Apr 2022 00:46:03 -0700 (PDT)\nMIME-Version: 1.0\nFrom: Firstname Lastname <firstname.lastname@gmail.com>\nDate: Sun, 3 Apr 2022 09:45:47 +0200\nMessage-ID: <CAJArRhHiueJUFDd_=nOqUmzydH2MfPtbAMPR5oNjqgUd0jLNyw@mail.gmail.com>\nSubject: Text email\nTo: First Name <first@example.com>, Last Name <last@example.com>\nCc: CC One <cc@example.com>, CC Two <cc2@example.com>\nContent-Type: multipart\/alternative; boundary=\"00000000000021168005dbbb34dc\"\n",
+  "dkim": "{@gmail.com : pass}",
+  "to": "First Name <first@example.com>, Last Name <last@example.com>",
+  "cc": "CC One <cc@example.com>, CC Two <cc2@example.com>",
+  "html": "<div dir=\"ltr\">Text body<br><\/div>\n",
+  "from": "Firstname Lastname <firstname.lastname@gmail.com>",
+  "text": "Text body\n",
+  "sender_ip": "209.85.208.52",
+  "envelope": "{\"to\":[\"cc2@example.com\",\"cc@example.com\",\"first@example.com\",\"last@example.com\"],\"from\":\"firstname.lastname@gmail.com\"}",
+  "attachments": "0",
+  "subject": "Text email",
+  "charsets": "{\"to\":\"UTF-8\",\"cc\":\"UTF-8\",\"html\":\"UTF-8\",\"subject\":\"UTF-8\",\"from\":\"UTF-8\",\"text\":\"UTF-8\"}",
+  "SPF": "pass"
+}

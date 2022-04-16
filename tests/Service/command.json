@@ -1,0 +1,35 @@
+{
+  "update_id": 150000000,
+  "message": {
+    "message_id": 29000,
+    "from": {
+      "id": 1800000000,
+      "is_bot": false,
+      "first_name": "Firstname"
+    },
+    "chat": {
+      "id": -1000000000000,
+      "title": "dev",
+      "type": "supergroup"
+    },
+    "date": 1600000000,
+    "text": "/e info@millau.ovh firstname.lastname@gmail.com Subject goes here",
+    "entities": [
+      {
+        "offset": 0,
+        "length": 2,
+        "type": "bot_command"
+      },
+      {
+        "offset": 3,
+        "length": 15,
+        "type": "email"
+      },
+      {
+        "offset": 19,
+        "length": 28,
+        "type": "email"
+      }
+    ]
+  }
+}
