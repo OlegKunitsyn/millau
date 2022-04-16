@@ -9,11 +9,11 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class TelegramGroupValidator extends ConstraintValidator
 {
-    private TelegramService $manager;
+    private TelegramService $service;
 
-    public function __construct(TelegramService $manager)
+    public function __construct(TelegramService $service)
     {
-        $this->manager = $manager;
+        $this->service = $service;
     }
 
     public function validate($value, Constraint $constraint)
@@ -22,10 +22,10 @@ class TelegramGroupValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, TelegramGroup::class);
         }
 
-        if (!$this->manager->isOnline()) {
+        if (!$this->service->isOnline()) {
             $this->context->buildViolation($constraint->messageOffline)->addViolation();
         }
-        if (!$this->manager->isMember($value)) {
+        if (!$this->service->isMember($value)) {
             $this->context->buildViolation($constraint->messageNotMember)->addViolation();
         }
     }

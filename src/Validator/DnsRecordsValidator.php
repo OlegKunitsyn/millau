@@ -9,11 +9,11 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class DnsRecordsValidator extends ConstraintValidator
 {
-    private SendGridService $manager;
+    private SendGridService $service;
 
-    public function __construct(SendGridService $manager)
+    public function __construct(SendGridService $service)
     {
-        $this->manager = $manager;
+        $this->service = $service;
     }
 
     public function validate($value, Constraint $constraint)
@@ -32,7 +32,7 @@ class DnsRecordsValidator extends ConstraintValidator
                 $group = $item['data'];
             }
         }
-        if (!$this->manager->isDomainValid($tld, $group)) {
+        if (!$this->service->isDomainValid($tld, $group)) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }
     }

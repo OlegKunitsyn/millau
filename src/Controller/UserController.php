@@ -21,9 +21,9 @@ class UserController extends AbstractController
     {
     }
 
-    public function dashboard(SendGridService $sendGridManager): Response
+    public function dashboard(SendGridService $service): Response
     {
-        $domains = $sendGridManager->getRegisteredDomains();
+        $domains = $service->getRegisteredDomains();
         return $this->render('user/dashboard.html.twig', [
             'domains' => $domains
         ]);

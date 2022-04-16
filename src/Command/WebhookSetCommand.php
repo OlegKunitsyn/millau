@@ -11,18 +11,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 class WebhookSetCommand extends Command
 {
     protected static $defaultName = 'app:webhook-set';
-    private TelegramService $manager;
+    private TelegramService $service;
 
-    public function __construct(TelegramService $manager)
+    public function __construct(TelegramService $service)
     {
-        $this->manager = $manager;
+        $this->service = $service;
         parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $this->manager->setWebhook();
+            $this->service->setWebhook();
             $output->writeln("OK");
             return 0;
         } catch (Exception $e) {

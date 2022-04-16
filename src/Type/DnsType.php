@@ -14,18 +14,18 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DnsType extends AbstractType
 {
-    private SendGridService $manager;
+    private SendGridService $service;
 
-    public function __construct(SendGridService $manager)
+    public function __construct(SendGridService $service)
     {
-        $this->manager = $manager;
+        $this->service = $service;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $data = [];
         if (!empty($options['data']['tld']) && !empty($options['data']['group'])) {
-            $records = $this->manager->getDomainRecords($options['data']['tld'], $options['data']['group']);
+            $records = $this->service->getDomainRecords($options['data']['tld'], $options['data']['group']);
             foreach ($records as $record) {
                 $data[] = (array)$record;
             }
