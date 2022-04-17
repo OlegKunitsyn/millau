@@ -113,6 +113,10 @@ class TelegramService
             }
             $subjectOffset = max($subjectOffset, $entity['offset'] + $entity['length'] + 1);
         }
+        if (0 === count($addresses)) {
+            return null;
+        }
+
         $subject = trim(substr($message['message']['text'], $subjectOffset));
 
         $email = new Email();

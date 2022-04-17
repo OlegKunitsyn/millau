@@ -43,7 +43,7 @@ class SendGridService
         $email
             ->addFrom(Address::create($message['from']))
             ->subject($message['subject'])
-            ->html($message['html'])
+            ->html($message['html'] ?? $message['text'])
             ->text($message['text'] ?? strip_tags($message['html'], '<pre><a><b><i><u><br><code><s><span>'));
         foreach (Address::createArray(explode(',', $message['to'])) as $address) {
             $email->addTo($address);
