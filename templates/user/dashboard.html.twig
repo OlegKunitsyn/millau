@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% set title='Dashboard'|trans %}
-{% set description='Dashboard'|trans %}
+{% set title='Dashboard' %}
+{% set description='Dashboard' %}
 
 {% block body %}
     <header class="py-3">
@@ -20,6 +20,7 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Domain</th>
+                            <th scope="col">Telegram</th>
                             <th scope="col">Valid</th>
                         </tr>
                         </thead>
@@ -28,6 +29,7 @@
                             <tr>
                                 <th scope="row">{{ domain.id }}</th>
                                 <td>{{ domain.domain }}</td>
+                                <td>{{ domain.domain|group }}</td>
                                 <td>{{ domain.valid ? 'Y' : 'N' }}</td>
                             </tr>
                         {% endfor %}
