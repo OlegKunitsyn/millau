@@ -5,8 +5,14 @@
     "egulias/email-validator": {
         "version": "3.1.2"
     },
+    "guzzlehttp/psr7": {
+        "version": "2.2.1"
+    },
     "monolog/monolog": {
         "version": "2.4.0"
+    },
+    "pimple/pimple": {
+        "version": "v3.5.0"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -17,8 +23,17 @@
     "psr/event-dispatcher": {
         "version": "1.0.0"
     },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.1.4"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "sendgrid/php-http-client": {
         "version": "3.14.4"
@@ -314,5 +329,14 @@
     },
     "twig/twig": {
         "version": "v3.3.8"
+    },
+    "zbateson/mail-mime-parser": {
+        "version": "2.2.1"
+    },
+    "zbateson/mb-wrapper": {
+        "version": "1.1.1"
+    },
+    "zbateson/stream-decorators": {
+        "version": "1.0.6"
     }
 }

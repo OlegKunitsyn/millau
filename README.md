@@ -5,10 +5,10 @@ Domain emails in Telegram. A helper which interconnects Telegram and SendGrid vi
 - All domains
 - Any addresses
 - Direct replies
+- Inbound attachments
 
 ## Limitations
 - No html previews
-- No attachments
 
 ## Requirements
 - PHP 7.4+

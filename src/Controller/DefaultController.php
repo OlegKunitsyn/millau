@@ -10,6 +10,8 @@ use App\Type\DomainType;
 use App\Type\TelegramType;
 use App\Type\TestEmailType;
 use Exception;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use SendGrid\Mail\TypeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,10 +68,10 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    public function inbox(Request $request, TelegramService $telegram, DnsService $dns): Response
+    public function inbox(Request $request, TelegramService $telegram, DnsService $dns, LoggerInterface $logger): Response
     {
         try {
-            $telegram->log(json_encode($request->request->all()));
+            $logger->log(LogLevel::DEBUG, json_encode($request->request->all()));
 
             $email = SendGridService::parseInbound($request->request->all());
             foreach ($dns->getGroups($email->getTo()) as $group) {
@@ -77,7 +79,7 @@ class DefaultController extends AbstractController
             }
             return new Response();
         } catch (Exception $e) {
-            $telegram->log($e->getMessage() . ': ' . json_encode($request->request->all()));
+            $telegram->log($e->getMessage());
             return new Response($e->getMessage(), Response::HTTP_OK);
         }
     }
@@ -98,7 +100,7 @@ class DefaultController extends AbstractController
             }
             return new Response();
         } catch (Exception $e) {
-            $telegram->log($e->getMessage() . ': ' . $request->getContent());
+            $telegram->log($e->getMessage());
             return new Response($e->getMessage(), Response::HTTP_OK);
         }
     }

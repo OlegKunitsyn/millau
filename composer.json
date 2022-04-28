@@ -17,19 +17,20 @@
         "symfony/flex": "^1.17|^2",
         "symfony/form": "5.4.*",
         "symfony/framework-bundle": "5.4.*",
+        "symfony/http-client": "5.4.*",
         "symfony/mailer": "5.4.*",
         "symfony/monolog-bundle": "^3.7",
         "symfony/runtime": "5.4.*",
         "symfony/security-bundle": "5.4.*",
         "symfony/validator": "5.4.*",
         "symfony/yaml": "5.4.*",
-        "twig/extra-bundle": "^3.3"
+        "twig/extra-bundle": "^3.3",
+        "zbateson/mail-mime-parser": "^2.2"
     },
     "require-dev": {
         "symfony/browser-kit": "5.4.*",
         "symfony/phpunit-bridge": "^6.0",
-        "symfony/web-profiler-bundle": "5.4.*",
-        "symfony/http-client": "5.4.*"
+        "symfony/web-profiler-bundle": "5.4.*"
     },
     "config": {
         "allow-plugins": {

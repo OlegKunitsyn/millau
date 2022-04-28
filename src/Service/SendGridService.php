@@ -11,6 +11,7 @@ use SendGrid\Mail\TypeException;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use ZBateson\MailMimeParser\MailMimeParser;
 
 class SendGridService
 {
@@ -42,12 +43,29 @@ class SendGridService
         $email = new Email();
         $email
             ->addFrom(Address::create($message['from']))
-            ->subject($message['subject'])
-            ->html($message['html'] ?? $message['text'])
-            ->text($message['text'] ?? strip_tags($message['html'], '<pre><a><b><i><u><br><code><s><span>'));
+            ->subject($message['subject']);
         foreach (Address::createArray(explode(',', $message['to'])) as $address) {
             $email->addTo($address);
         }
+
+        if (!empty($message['email'])) {
+            // raw mode
+            $parser = new MailMimeParser();
+            $message = $parser->parse($message['email'], false);
+            $email
+                ->html($message->getHtmlContent())
+                ->text($message->getTextContent());
+            for ($i = 0; $i < $message->getAttachmentCount(); $i++) {
+                $attachment = $message->getAttachmentPart($i);
+                $email->attach($attachment->getContent(), $attachment->getFilename(), $attachment->getContentType());
+            }
+        } else {
+            // parsed mode
+            $email
+                ->html($message['html'] ?? $message['text'])
+                ->text($message['text'] ?? strip_tags($message['html'], '<pre><a><b><i><u><br><code><s><span>'));
+        }
+
         return $email;
     }
 
@@ -121,7 +139,7 @@ class SendGridService
                     'url' => $this->inbox,
                     'hostname' => $hostname,
                     'spam_check' => false,
-                    'send_raw' => false
+                    'send_raw' => true
                 ]);
                 $json = json_decode($create->body(), true);
                 if (isset($json['errors'])) {

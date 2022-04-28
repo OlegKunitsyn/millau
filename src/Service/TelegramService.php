@@ -4,7 +4,12 @@ namespace App\Service;
 
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mime\Part\Multipart\FormDataPart;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class TelegramService
 {
@@ -13,11 +18,13 @@ class TelegramService
     private string $token;
     private string $outbox;
     private string $devGroup;
+    private HttpClientInterface $httpClient;
 
-    public function __construct(string $token, string $group, string $domain, UrlGeneratorInterface $router)
+    public function __construct(string $token, string $group, string $domain, UrlGeneratorInterface $router, HttpClientInterface $httpClient)
     {
         $this->token = $token;
         $this->devGroup = $group;
+        $this->httpClient = $httpClient;
         $host = $router->getContext()->getHost();
         $scheme = $router->getContext()->getScheme();
         $router->getContext()
@@ -29,29 +36,34 @@ class TelegramService
             ->setScheme($scheme);
     }
 
+    /**
+     * @throws HttpExceptionInterface|TransportExceptionInterface
+     */
     public function setWebhook(): bool
     {
-        $response = file_get_contents('https://api.telegram.org/bot' . $this->token . '/setWebhook?url=' . urlencode($this->outbox));
-        $json = json_decode($response, true);
+        $response = $this->httpClient->request('GET', "https://api.telegram.org/bot{$this->token}/setWebhook?url=" . urlencode($this->outbox));
+        $json = json_decode($response->getContent(), true);
         return $json['ok'] ?? false;
     }
 
+    /**
+     * @throws HttpExceptionInterface|TransportExceptionInterface
+     */
     public function getWebhook(): ?string
     {
-        $response = file_get_contents('https://api.telegram.org/bot' . $this->token . '/getWebhookInfo');
-        $json = json_decode($response, true);
+        $response = $this->httpClient->request('GET', "https://api.telegram.org/bot{$this->token}/getWebhookInfo");
+        $json = json_decode($response->getContent(), true);
         return $json['result']['url'] ?? null;
     }
 
-    public function log(string $message): bool
+    /**
+     * @throws HttpExceptionInterface|TransportExceptionInterface
+     */
+    public function log(string $message): ?string
     {
-        $data = [
-            'chat_id' => $this->devGroup,
+        return $this->createPost($this->devGroup, [
             'text' => $message
-        ];
-        $response = file_get_contents('https://api.telegram.org/bot' . $this->token . '/sendMessage?' . http_build_query($data));
-        $json = json_decode($response, true);
-        return $json['ok'] ?? false;
+        ]);
     }
 
     public function parseReply(array $message): ?Email
@@ -133,7 +145,7 @@ class TelegramService
     }
 
     /**
-     * API https://core.telegram.org/bots/api#sendmessage
+     * @throws HttpExceptionInterface|TransportExceptionInterface
      */
     public function createPostId(string $group = null): ?string
     {
@@ -146,6 +158,9 @@ class TelegramService
         ]);
     }
 
+    /**
+     * @throws HttpExceptionInterface|TransportExceptionInterface
+     */
     public function createPostEmail(Email $email, string $group = null): ?string
     {
         if (null === $group) {
@@ -163,33 +178,44 @@ class TelegramService
             $to[] = "{$address->getName()} {$address->getAddress()}";
         }
 
-        return $this->createPost($group, [
+        $postId = $this->createPost($group, [
             '<b>' . SendGridService::FROM . '</b> ' . implode(', ', $from),
             '<b>' . SendGridService::TO . '</b> ' . implode(', ', $to),
             "<b>{$email->getSubject()}</b>",
             strip_tags($email->getTextBody(), '<pre><a><b><i><u><code><s>'),
         ]);
+        foreach ($email->getAttachments() as $attachment) {
+            $this->sendDocument($group, $postId, $attachment);
+        }
+        return $postId;
     }
 
+    /**
+     * @throws HttpExceptionInterface|TransportExceptionInterface
+     */
     public function isMember(string $group): bool
     {
         $data = [
             'chat_id' => $group
         ];
-        $response = @file_get_contents('https://api.telegram.org/bot' . $this->token . '/getChat?' . http_build_query($data));
-        $json = json_decode($response, true);
+        $response = $this->httpClient->request('GET', "https://api.telegram.org/bot{$this->token}/getChat?" . http_build_query($data));
+        $json = json_decode($response->getContent(), true);
         return $json['ok'] ?? false;
     }
 
+    /**
+     * @throws HttpExceptionInterface|TransportExceptionInterface
+     */
     public function isOnline(): bool
     {
-        $response = file_get_contents('https://api.telegram.org/bot' . $this->token . '/getMe');
-        $json = json_decode($response, true);
+        $response = $this->httpClient->request('GET', "https://api.telegram.org/bot{$this->token}/getMe");
+        $json = json_decode($response->getContent(), true);
         return $json['ok'] ?? false;
     }
 
     /**
      * API https://core.telegram.org/bots/api#sendmessage
+     * @throws HttpExceptionInterface|TransportExceptionInterface
      */
     private function createPost(string $group, array $lines): ?string
     {
@@ -200,11 +226,30 @@ class TelegramService
             'disable_web_page_preview' => false,
             'parse_mode' => 'HTML'
         ];
-        $response = file_get_contents('https://api.telegram.org/bot' . $this->token . '/sendMessage?' . http_build_query($data));
-        $json = json_decode($response, true);
+        $response = $this->httpClient->request('GET', "https://api.telegram.org/bot{$this->token}/sendMessage?" . http_build_query($data));
+        $json = json_decode($response->getContent(), true);
         if ($json['ok'] ?? false) {
             return $json['result']['message_id'];
         }
         return null;
+    }
+
+    /**
+     * API https://core.telegram.org/bots/api#senddocument
+     * @throws HttpExceptionInterface|TransportExceptionInterface
+     */
+    private function sendDocument(string $group, string $postId, DataPart $attachment): bool
+    {
+        $data = new FormDataPart([
+            'chat_id' => $group,
+            'reply_to_message_id' => $postId,
+            'document' => $attachment
+        ]);
+        $response = $this->httpClient->request('POST', "https://api.telegram.org/bot{$this->token}/sendDocument", [
+            'body' => $data->bodyToIterable(),
+            'headers' => $data->getPreparedHeaders()->toArray(),
+        ]);
+        $json = json_decode($response->getContent(), true);
+        return $json['ok'] ?? false;
     }
 }
