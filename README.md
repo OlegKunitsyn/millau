@@ -38,3 +38,4 @@ Finally, proceed to the service.
 ## References
 - [SendGrid API](https://docs.sendgrid.com/api-reference)
 - [Telegram API](https://core.telegram.org/bots/api)
+- [Почта для домена в Telegram](https://habr.com/ru/post/661379/)
