@@ -20,7 +20,7 @@
             </div>
 
             {% if form.vars.value.step|default('') == '' %}
-                <div class="pt-3 row g-4 row-cols-1 row-cols-lg-3">
+            <div class="pt-3 row g-4 row-cols-1 row-cols-lg-4">
                 <div class="col d-flex align-items-start">
                     <div>
                         <h2 class="fs-5">All domains</h2>
@@ -35,7 +35,7 @@
                         <h2 class="fs-5">Any addresses</h2>
                         <p class="small">
                             You can use multiple email addresses per domain.
-                            You can share a Telegram group and collaborate with your team for different operations or roles.
+                            You can share the Telegram group and collaborate with your team for different operations or roles.
                         </p>
                     </div>
                 </div>
@@ -45,6 +45,14 @@
                         <p class="small">
                             You can reply to the email inside the Telegram group.
                             Your message will be converted to the standard email and sent to the recipient mentioned in the From field.
+                    </div>
+                </div>
+                <div class="col d-flex align-items-start">
+                    <div>
+                        <h2 class="fs-5">Inbound attachments</h2>
+                        <p class="small">
+                            You will receive all attachments of the incoming email via the Telegram group.
+                            Currently, Telegram supports any files up to 50 MB in size.
                     </div>
                 </div>
             </div>

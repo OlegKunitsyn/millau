@@ -39,6 +39,9 @@
             <ul class="nav">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="nav-item">
+                        <a href="{{ path('route_user_dashboard') }}" class="nav-link link-dark px-2" aria-current="page">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ path('route_user_logout') }}" class="nav-link link-dark px-2" aria-current="page">Logout</a>
                     </li>
                 {% else %}

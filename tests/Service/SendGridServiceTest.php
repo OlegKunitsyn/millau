@@ -77,4 +77,28 @@ class SendGridServiceTest extends WebTestCase
         $this->assertEquals("Text body\n", $email->getTextBody());
         $this->assertEquals("<div dir=\"ltr\">Text body<br></div>\n", $email->getHtmlBody());
     }
+
+    public function testParseInboundAttachment()
+    {
+        $email = $this->service::parseInbound(json_decode(file_get_contents(__DIR__ . '/attachment.json'), true));
+
+        /** @var Address[] $from */
+        $from = $email->getFrom();
+        $this->assertEquals('First Last', $from[0]->getName());
+        $this->assertEquals('first.last@gmail.com', $from[0]->getAddress());
+
+        /** @var Address[] $to */
+        $to = $email->getTo();
+        $this->assertEquals('', $to[0]->getName());
+        $this->assertEquals('info@millau.ovh', $to[0]->getAddress());
+
+        $this->assertEquals('Test attachment', $email->getSubject());
+        $this->assertEquals("Test\r\nbody\n", $email->getTextBody());
+        $this->assertEquals("<div dir=\"ltr\"><div>Test</div><div>body</div><div><div dir=\"ltr\" class=\"gmail_signature\" data-smartmail=\"gmail_signature\"><div dir=\"ltr\"><br></div></div></div></div>\n", $email->getHtmlBody());
+
+        $this->assertCount(1, $email->getAttachments());
+        $this->assertEquals('image', $email->getAttachments()[0]->getMediaType());
+        $this->assertEquals('jpeg', $email->getAttachments()[0]->getMediaSubtype());
+        $this->assertEquals(11331, strlen($email->getAttachments()[0]->getBody()));
+    }
 }

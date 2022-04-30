@@ -40,6 +40,13 @@ class TelegramServiceTest extends WebTestCase
         $this->assertNotNull($id);
     }
 
+    public function testCreatePostAttachment()
+    {
+        $email = SendGridService::parseInbound(json_decode(file_get_contents(__DIR__ . '/attachment.json'), true));
+        $id = $this->service->createPostEmail($email, $this->group);
+        $this->assertNotNull($id);
+    }
+
     public function testCreatePostWelcome()
     {
         $email = SendGridService::parseInbound(json_decode(file_get_contents(__DIR__ . '/welcome.json'), true));
