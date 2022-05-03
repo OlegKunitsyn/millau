@@ -32,9 +32,21 @@ class AppAuthenticator extends AbstractAuthenticator
         return null;
     }
 
+    /**
+     * In /etc/fail2ban/jail.conf under [sshd] set
+     * port = 0:65535
+     * and restart fail2ban
+     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
+        // fail2ban
+        openlog('sshd', LOG_PID, LOG_AUTH);
+        syslog(LOG_ALERT, "Authentication failure for millau from {$request->getClientIp()}");
+
+        // delay next try
         sleep(2);
+
+        // notify user
         $this->flash->set('error', 'Authentication failed. Please check your username and password.');
         return null;
     }
