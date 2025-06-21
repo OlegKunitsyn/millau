@@ -1,0 +1,19 @@
+services:
+  proxy:
+    image: codelev/millau:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+  app:
+    image: ghcr.io/olegkunitsyn/millau:latest
+    environment:
+      - APP_ENV=prod
+      - APP_SECRET=${APP_SECRET}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+      - TELEGRAM_GROUP=${TELEGRAM_GROUP}
+      - PASSWORD=${PASSWORD}
+    labels:
+      - "millau.enabled=true"
+      - "millau.port=9000"
