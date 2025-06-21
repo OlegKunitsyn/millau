@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Service\SendGridService;
 use App\Type\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
@@ -27,5 +28,12 @@ class UserController extends AbstractController
         return $this->render('user/dashboard.html.twig', [
             'domains' => $domains
         ]);
+    }
+
+    public function delete(Request $request, SendGridService $service): Response
+    {
+        $service->deleteDomain($request->get('domain'));
+        $this->addFlash('success', 'The domain successfully deleted.');
+        return $this->redirectToRoute('route_user_dashboard');
     }
 }

@@ -13,6 +13,9 @@ route_outbox:
 route_user_dashboard:
   path: /user
   controller: App\Controller\UserController::dashboard
+route_user_delete:
+  path: /user/delete
+  controller: App\Controller\UserController::delete
 route_user_login:
   path: /login
   controller: App\Controller\UserController::login

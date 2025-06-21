@@ -22,6 +22,7 @@
                             <th scope="col">Domain</th>
                             <th scope="col">Telegram</th>
                             <th scope="col">Valid</th>
+                            <th scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -31,6 +32,9 @@
                                 <td>{{ domain.domain }}</td>
                                 <td>{{ domain.domain|group }}</td>
                                 <td>{{ domain.valid ? 'Y' : 'N' }}</td>
+                                <td>
+                                    <a href="{{ path('route_user_delete', {domain: domain.domain}) }}" class="buttons button-8 w-button">Delete</a>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

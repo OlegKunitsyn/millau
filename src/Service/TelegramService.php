@@ -178,11 +178,14 @@ class TelegramService
             $to[] = "{$address->getName()} {$address->getAddress()}";
         }
 
+        $body = strip_tags($email->getTextBody() ?? $email->getHtmlBody(),'<pre><a><b><i><u><code><s>');
+        $body = preg_replace('/\s+/', ' ', $body);
+
         $postId = $this->createPost($group, [
             '<b>' . SendGridService::FROM . '</b> ' . implode(', ', $from),
             '<b>' . SendGridService::TO . '</b> ' . implode(', ', $to),
             "<b>{$email->getSubject()}</b>",
-            strip_tags($email->getTextBody(), '<pre><a><b><i><u><code><s>'),
+            $body,
         ]);
         foreach ($email->getAttachments() as $attachment) {
             $this->sendDocument($group, $postId, $attachment);

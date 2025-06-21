@@ -79,9 +79,7 @@ class SendGridService
     /** @noinspection PhpUndefinedMethodInspection */
     public function getRegisteredDomain(string $tld, string $group): ?Domain
     {
-        $response = $this->client->client->whitelabel()->domains()->get();
-        $items = json_decode($response->body(), true);
-        foreach ($items as $item) {
+        foreach ($this->getRegisteredDomains() as $item) {
             if ($item['domain'] === $tld) {
                 $domain = new Domain();
                 $domain->domain = $item['domain'];
@@ -123,6 +121,16 @@ class SendGridService
             return $json['valid'] && in_array(self::INBOUND_MX, $mxHosts) && null !== $this->dns->getGroup($tld);
         }
         return false;
+    }
+
+    /** @noinspection PhpUndefinedMethodInspection */
+    public function deleteDomain(string $tld): void
+    {
+        foreach ($this->getRegisteredDomains() as $item) {
+            if ($item['domain'] === $tld) {
+                $this->client->client->whitelabel()->domains()->_($item['id'])->delete();
+            }
+        }
     }
 
     /**
