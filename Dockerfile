@@ -1,4 +1,4 @@
-FROM php:8.1-cli
+FROM php:8.2.35-cli
 WORKDIR /app
 RUN apt-get update && apt-get install -y \
     git unzip curl libicu-dev libonig-dev libxml2-dev libzip-dev zip wget \
